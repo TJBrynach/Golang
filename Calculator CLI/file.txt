@@ -1,0 +1,7 @@
+🛠 Project: Write a simple calculator CLI that supports basic arithmetic operations.
+
+- define functions
+- Add
+- subtract
+- divide
+- multiply

@@ -1,0 +1,72 @@
+Approach to the Phonebook CLI Project
+1. Understanding the Core Concepts
+
+Before implementing the project, ensure you understand:
+
+    Arrays: Fixed-size collections of elements.
+    Slices: Dynamic, resizable collections based on arrays.
+    Maps: Key-value data structures, ideal for a phonebook.
+    for range loops: Used for iterating over slices, arrays, and maps.
+
+2. Defining the Project Scope
+
+The Phonebook CLI will: ✅ Store names and phone numbers.
+✅ Allow users to add, delete, and search for contacts.
+✅ Display all contacts in the phonebook.
+3. Designing the Data Structure
+
+    Use a map[string]string], where:
+        The key is the name.
+        The value is the phone number.
+
+Example:
+
+{
+    "Alice": "123-456-7890",
+    "Bob": "987-654-3210"
+}
+
+    This allows fast lookups when searching for a contact.
+
+4. CLI Interaction Flow
+
+    Display a menu with options:
+        Add a new contact
+        Search for a contact
+        Delete a contact
+        View all contacts
+        Exit
+
+    Handle User Input:
+        Read user input from the command line.
+        Validate input to prevent errors (e.g., check if a number is in the correct format).
+
+    Perform Actions:
+        Add Contact → Check if the name already exists, then store it.
+        Search Contact → Look up the name in the map.
+        Delete Contact → Remove the entry from the map.
+        List All Contacts → Iterate over the map and display each contact.
+
+    Loop Until Exit:
+        The CLI should keep running until the user selects "Exit".
+
+5. Edge Cases & Enhancements
+
+    Handle case insensitivity (e.g., "Alice" and "alice" should be treated the same).
+    Prevent adding duplicate contacts.
+    Allow searching by partial names (e.g., searching "Al" should find "Alice").
+    Format phone numbers properly (e.g., (123) 456-7890 instead of 1234567890).
+    Optionally, store contacts in a file for persistence.
+
+6. Testing
+
+    Add multiple contacts and verify they are stored correctly.
+    Search for existing and non-existing contacts.
+    Try deleting contacts and confirm they are removed.
+    Test different input formats to ensure robustness.
+
+7. Future Enhancements
+
+    Export phonebook as a CSV file.
+    Implement a GUI version.
+    Support multiple phone numbers per contact.

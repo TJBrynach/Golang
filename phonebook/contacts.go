@@ -16,24 +16,42 @@ func (c Contact) Display() string {
 	return fmt.Sprintf("%s: %s", c.Name, c.Number)
 }
 
-func createContact(name string, number string) error {
-
-	contact, err := searchContact(name)
+func saveContacts(contacts []Contact) error {
+	file, err := os.Open("phonebook.json")
 	if err != nil {
-		return fmt.Errorf("error searching for contact")
+		return fmt.Errorf("error opening file for writing: %v", err)
 	}
+	defer file.Close()
 
-	if name == contact.Name {
-		return fmt.Errorf("user %v is already in your contact book", name)
-	} else {
-		fmt.Println("else")
-		contact := Contact{
-			Name:   name,
-			Number: number,
-		}
-		appendJSON(contact)
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "  ")
+	if err := encoder.Encode(contacts); err != nil {
+		return fmt.Errorf("error encoding contacts: %v", err)
 	}
 	return nil
+}
+
+func createContact(name string, number string) error {
+
+	contacts, err := loadContacts()
+	if err != nil {
+		return err
+	}
+
+	for _, contact := range contacts {
+		if contact.Name == name {
+			return fmt.Errorf("user %v is already in your contact book", name)
+		}
+	}
+
+	contact := Contact{
+		Name:   name,
+		Number: number,
+	}
+
+	contacts = append(contacts, contact)
+
+	return saveContacts(contacts)
 }
 
 func listContacts() error {
@@ -90,32 +108,20 @@ func deleteContact(name string) error {
 
 func searchContact(name string) (Contact, error) {
 	// open file
-	file, err := os.Open("phonebook.json")
+	contacts, err := loadContacts()
 	if err != nil {
-		return Contact{}, fmt.Errorf("error opening file to read: %v", err)
+		return Contact{}, err
 	}
 
-	// decode file
-	var data []Contact
-	decoder := json.NewDecoder(file)
-	decoder.Decode(&data)
-
-	// loop through and compare name
-	found := false
-	for _, contact := range data {
+	for _, contact := range contacts {
 		if contact.Name == name {
 			fmt.Println(contact.Display())
-			found = true
 			return contact, nil
 		}
 
 	}
 
-	if !found {
-		fmt.Println("No contact under that name")
-	}
-
 	// if so display
 	// if not no user of that name
-	return Contact{}, nil
+	return Contact{}, fmt.Errorf("no contact found with name: %s", name)
 }

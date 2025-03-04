@@ -57,3 +57,22 @@ func appendJSON(contact Contact) error {
 	return nil
 
 }
+
+func loadContacts() ([]Contact, error) {
+	file, err := os.Open("phonebook.json")
+	if err != nil {
+		if os.IsNotExist(err) {
+			return []Contact{}, nil
+		}
+		return nil, fmt.Errorf("error opening phonebook: %v", err)
+	}
+	defer file.Close()
+
+	var contacts []Contact
+	decoder := json.NewDecoder(file)
+	if err := decoder.Decode(&contacts); err != nil {
+		return nil, fmt.Errorf("error decoding phonebook json: %v", err)
+	}
+
+	return contacts, nil
+}

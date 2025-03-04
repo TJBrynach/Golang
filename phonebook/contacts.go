@@ -17,13 +17,22 @@ func (c Contact) Display() string {
 }
 
 func createContact(name string, number string) error {
-	contact := Contact{
-		Name:   name,
-		Number: number,
+
+	contact, err := searchContact(name)
+	if err != nil {
+		return fmt.Errorf("error searching for contact")
 	}
 
-	appendJSON(contact)
-
+	if name == contact.Name {
+		return fmt.Errorf("user %v is already in your contact book", name)
+	} else {
+		fmt.Println("else")
+		contact := Contact{
+			Name:   name,
+			Number: number,
+		}
+		appendJSON(contact)
+	}
 	return nil
 }
 
@@ -50,7 +59,7 @@ func deleteContact(name string) error {
 	// open file
 	file, err := os.Open("phonebook.json")
 	if err != nil {
-		return fmt.Errorf("error opening file to read: %v", err)
+		return fmt.Errorf("error opening file to read: %v", name)
 	}
 
 	// decode file into an object
@@ -77,4 +86,36 @@ func deleteContact(name string) error {
 	encoder.Encode(newList)
 
 	return nil
+}
+
+func searchContact(name string) (Contact, error) {
+	// open file
+	file, err := os.Open("phonebook.json")
+	if err != nil {
+		return Contact{}, fmt.Errorf("error opening file to read: %v", err)
+	}
+
+	// decode file
+	var data []Contact
+	decoder := json.NewDecoder(file)
+	decoder.Decode(&data)
+
+	// loop through and compare name
+	found := false
+	for _, contact := range data {
+		if contact.Name == name {
+			fmt.Println(contact.Display())
+			found = true
+			return contact, nil
+		}
+
+	}
+
+	if !found {
+		fmt.Println("No contact under that name")
+	}
+
+	// if so display
+	// if not no user of that name
+	return Contact{}, nil
 }

@@ -41,7 +41,6 @@ func appendJSON(contact Contact) error {
 
 	// append
 	data = append(data, contact)
-	fmt.Println(data)
 
 	// write (encode)
 	updatedJSON, err := json.MarshalIndent(data, "", "  ")

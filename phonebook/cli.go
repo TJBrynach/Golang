@@ -51,6 +51,20 @@ func HandleCLI() {
 			fmt.Println("error deleting user", err)
 			return
 		}
+
+	case "search":
+		if len(os.Args) < 3 {
+			fmt.Println("incorrect number of arguments")
+			return
+		}
+
+		name := os.Args[2]
+
+		_, err := searchContact(name)
+		if err != nil {
+			fmt.Println("error searching ", err)
+		}
+
 	default:
 		fmt.Println("inaccurate command the options are: add, list")
 	}

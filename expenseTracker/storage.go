@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+// create file works
 func createJSON() error {
 	fileName := "expenses.json"
 	_, err := os.Stat(fileName)
@@ -21,6 +22,45 @@ func createJSON() error {
 			return fmt.Errorf("error creating file, %v", err)
 		}
 		fmt.Println("file created")
+	}
+	return nil
+}
+
+func readJSON(fileName string) ([]Expense, error) {
+	file, err := os.Open(fileName)
+	if err != nil && os.IsNotExist(err) {
+		return nil, fmt.Errorf("failed to read file: %v", err)
+	}
+	defer file.Close()
+
+	var expenses []Expense
+
+	decoder := json.NewDecoder(file)
+	if err := decoder.Decode(&expenses); err != nil {
+		return nil, fmt.Errorf("erroring on decode: %v", err)
+	}
+
+	fmt.Println("data: ")
+	fmt.Println(expenses)
+	return expenses, nil
+}
+
+func writeJSON(expense Expense) error {
+	fileName := "expenses.json"
+	data, err := readJSON(fileName)
+	if err != nil {
+		return fmt.Errorf("failed to read JSON: %v", err)
+	}
+	data = append(data, expense)
+
+	updatedJSON, err := json.MarshalIndent(data, "", "  ")
+	if err != nil {
+		return fmt.Errorf("error creating JSON, %v", err)
+	}
+
+	err = os.WriteFile(fileName, updatedJSON, 0644)
+	if err != nil {
+		return fmt.Errorf("error writing to file %v", err)
 	}
 	return nil
 }

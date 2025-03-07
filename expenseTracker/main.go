@@ -18,17 +18,19 @@ type Expense struct {
 // }
 
 func main() {
-	// expense := Expense{
-	// 	Category:    "food",
-	// 	Amount:      12.23,
-	// 	Description: "bananas and baked beans",
-	// }
-	// err := writeJSON(expense)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
 
 	err := createJSON()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	expense := Expense{
+		Category:    "food",
+		Amount:      12.23,
+		Description: "bananas and baked beans",
+	}
+
+	err = writeJSON(expense)
 	if err != nil {
 		fmt.Println(err)
 	}

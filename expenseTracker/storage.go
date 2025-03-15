@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 )
 
@@ -28,15 +29,31 @@ func createJSON() error {
 
 func readJSON(fileName string) ([]Expense, error) {
 	file, err := os.Open(fileName)
-	if err != nil && os.IsNotExist(err) {
+	if err != nil {
+		// if file doesn't exist
+		if os.IsNotExist(err) {
+			err = createJSON()
+			if err != nil {
+				return nil, fmt.Errorf("error creating JSON file: %v", err)
+			}
+			return []Expense{}, nil
+		}
 		return nil, fmt.Errorf("failed to read file: %v", err)
 	}
 	defer file.Close()
 
+	content, err := io.ReadAll(file)
+	if err != nil {
+		return nil, fmt.Errorf("error reading file: %v", err)
+	}
+
+	if len(content) == 0 {
+		return []Expense{}, nil
+	}
+
 	var expenses []Expense
 
-	decoder := json.NewDecoder(file)
-	if err := decoder.Decode(&expenses); err != nil {
+	if err := json.Unmarshal(content, &expenses); err != nil {
 		return nil, fmt.Errorf("erroring on decode: %v", err)
 	}
 
@@ -47,6 +64,8 @@ func readJSON(fileName string) ([]Expense, error) {
 
 func writeJSON(expense Expense) error {
 	fileName := "expenses.json"
+
+	// need a check to see if the file is empty
 	data, err := readJSON(fileName)
 	if err != nil {
 		return fmt.Errorf("failed to read JSON: %v", err)
@@ -64,45 +83,3 @@ func writeJSON(expense Expense) error {
 	}
 	return nil
 }
-
-// func writeJSON(expense Expense) error {
-// 	fileName := "expenses.json"
-
-// 	_, err := os.Stat(fileName)
-// 	if err != nil && os.IsNotExist(err) {
-// 		return fmt.Errorf("error checking file : %v", err)
-
-// 	if err == nil {
-// 		var expenses []Expense
-
-// 		data, err := json.MarshalIndent(expenses, "", "  ")
-// 		if err != nil {
-// 			return fmt.Errorf("failed to Marshal blank data: %v", err)
-// 		}
-
-// 		err = os.WriteFile(fileName, data, 0644)
-// 		if err != nil {
-// 			return fmt.Errorf("failed to save file, %v", err)
-// 		}
-// 		fmt.Println("successfully created JSON")
-// 	}
-
-// 	}
-// 	// if the file exists.
-
-// 	data, err := json.MarshalIndent(expense, "", "  ")
-// 	if err != nil {
-// 		return fmt.Errorf("error Marshalling data")
-// 	}
-
-// 	err = os.WriteFile(fileName, data, 0644)
-// 	if err != nil {
-// 		return fmt.Errorf("error writing to file")
-// 	}
-// 	fmt.Println("successfully updated file")
-
-// 	}
-// 	return nil
-// }
-
-// func readJSON() {}

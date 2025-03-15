@@ -7,10 +7,10 @@ import (
 
 func main() {
 
-	err := createJSON()
-	if err != nil {
-		fmt.Println(err)
-	}
+	// err := createJSON()
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
 
 	expense := Expense{
 		Item:   "Baked beans",
@@ -18,8 +18,9 @@ func main() {
 		Date:   time.Now(),
 	}
 
-	err = writeJSON(expense)
+	err := writeJSON(expense)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("this is the error, %v", err)
 	}
+
 }

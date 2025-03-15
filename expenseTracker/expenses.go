@@ -12,25 +12,25 @@ type Expense struct {
 	Date   time.Time `json:"date"`
 }
 
-func addExpense(item string, amount float32) (Expense, error) {
+func addExpense(item string, amount float32) error {
 
 	new_expense := Expense{
 		Item:   item,
 		Amount: amount,
 		Date:   time.Now(),
 	}
-	fileName := "expenses.json"
-	content, err := readJSON(fileName)
-	if err != nil {
-		return []Expense{}, fmt.Errorf("errored reading file: %v", err)
-	}
-	content = append(content, new_expense)
+	// fileName := "expenses.json"
+	// content, err := readJSON(fileName)
+	// if err != nil {
+	// 	return []Expense{}, fmt.Errorf("errored reading file: %v", err)
+	// }
 
-	err = writeJSON(content)
+	err := writeJSON(new_expense)
 	if err != nil {
-		return []Expense{}, fmt.Errorf("Error writing to file: %v", err)
+		return fmt.Errorf("error writing to file: %v", err)
 	}
 	// read expenses into go struct
 	// create struct item from data
 	// write expense into json
+	return nil
 }

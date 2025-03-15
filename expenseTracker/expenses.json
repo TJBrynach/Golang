@@ -16,5 +16,17 @@
     "item": "Baked beans",
     "amount": 12.23,
     "date": "2025-03-15T16:39:03.398961Z"
+  },
+  {
+    "id": "",
+    "item": "Baked Beans",
+    "amount": 2.25,
+    "date": "2025-03-15T21:05:19.517602Z"
+  },
+  {
+    "id": "",
+    "item": "Baked Beans",
+    "amount": 2.25,
+    "date": "2025-03-15T21:05:24.571137Z"
   }
 ]

@@ -6,21 +6,29 @@ import (
 
 func main() {
 
-	// err := createJSON()
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-
-	// expense := Expense{
-	// 	Item:   "Baked beans",
-	// 	Amount: 12.23,
-	// 	Date:   time.Now(),
-	// }
-	err := addExpense("Baked Beans", 2.25)
-	// err := writeJSON(expense)
+	err := addExpense("Ice cream", 2.99)
 	if err != nil {
-		fmt.Println("this is the error, %v", err)
+		fmt.Printf("error adding expense, %v", err)
 	}
-	// err := writeJSON()
 
+	// err = listExpenses()
+	// if err != nil {
+	// 	fmt.Println("error printing list")
+	// }
+
+	// err = calcExpenses()
+	// if err != nil {
+	// 	fmt.Println("error printing calculating expenses")
+	// }
+
+	// err = calcItemExpenses("bicycle")
+	// if err != nil {
+	// 	fmt.Println("error calculating items exepenses")
+	// }
+
+	count, err := countItemExpenses("ice cream")
+	if err != nil {
+		fmt.Println("error getting the count")
+	}
+	fmt.Println(count)
 }

@@ -57,12 +57,12 @@ func readJSON(fileName string) ([]Expense, error) {
 		return nil, fmt.Errorf("erroring on decode: %v", err)
 	}
 
-	fmt.Println("data: ")
-	fmt.Println(expenses)
+	// fmt.Println("data: ")
+	// fmt.Println(expenses)
 	return expenses, nil
 }
 
-func writeJSON(expense Expense) error {
+func updateJSON(expense Expense) error {
 	fileName := "expenses.json"
 
 	// need a check to see if the file is empty

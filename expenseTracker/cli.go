@@ -26,7 +26,7 @@ func HandleCLI() {
 		switch input {
 		case "1":
 			fmt.Println("We can add an expense, can you provide more details; name and cost")
-			reader = bufio.Reader{}
+			addExpense()
 		case "2":
 			fmt.Println(" viewing expenses")
 

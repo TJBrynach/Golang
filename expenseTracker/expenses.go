@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"strconv"
 	"strings"
@@ -39,10 +40,23 @@ func IdIncrement() string {
 	return strconv.Itoa(id_num)
 }
 
-func addExpense(item string, amount float32) error {
+func addExpense(reader *bufio.Reader) error {
 
 	new_id := IdIncrement()
 
+	fmt.Println("Enter item description: ")
+	description, _ := reader.ReadString('\n')
+	item := strings.TrimSpace(description)
+
+	fmt.Println("How much did it cost: ")
+	amount, _ := reader.ReadString('\n')
+	amount = strings.TrimSpace(amount)
+
+	amount, err := strconv.ParseFloat(amount, 64)
+	if err != nil {
+		fmt.Println("Invalid amount. Please enter a valid number.")
+		return
+	}
 	new_expense := Expense{
 		ID:     new_id,
 		Item:   item,

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -18,11 +19,32 @@ func (e Expense) Display() string {
 	return fmt.Sprintf("%s: £%.2f", e.Item, e.Amount)
 }
 
-func (e Expense) IdIncrement() int {}
+func IdIncrement() string {
+	content, err := readJSON("expenses.json")
+	if err != nil {
+		return "0"
+	}
+
+	var id_num int
+	if len(content) > 0 {
+		maxID, err := strconv.Atoi(content[len(content)-1].ID)
+		if err != nil {
+			fmt.Println("erroring getting maxid")
+			return "0"
+		}
+		id_num = maxID + 1
+	} else {
+		id_num = 1
+	}
+	return strconv.Itoa(id_num)
+}
 
 func addExpense(item string, amount float32) error {
 
+	new_id := IdIncrement()
+
 	new_expense := Expense{
+		ID:     new_id,
 		Item:   item,
 		Amount: amount,
 		Date:   time.Now(),
@@ -98,17 +120,17 @@ func countItemExpenses(item string) (int16, error) {
 	return counter, nil
 }
 
-func deleteExpense(item string) error {
-	//
-	content, err := readJSON("expenses.json")
-	if err != nil {
-		return fmt.Errorf("error reading file: %v", err)
-	}
+// func deleteExpense(item string) error {
+// 	//
+// 	content, err := readJSON("expenses.json")
+// 	if err != nil {
+// 		return fmt.Errorf("error reading file: %v", err)
+// 	}
 
-	lowerItem := strings.ToLower(item)
+// 	// lowerItem := strings.ToLower(item)
 
-	for _, e := range content {
-	}
+// 	// for _, e := range content {
+// 	// }
 
-	return nil
-}
+// 	return nil
+// }

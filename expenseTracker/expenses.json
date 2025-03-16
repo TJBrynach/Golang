@@ -1,200 +1,38 @@
 [
   {
-    "id": "",
+    "id": "0",
     "item": "Baked beans",
     "amount": 12.23,
     "date": "2025-03-15T16:36:11.289877Z"
   },
   {
-    "id": "",
+    "id": "1",
     "item": "Baked beans",
     "amount": 12.23,
     "date": "2025-03-15T16:39:01.391496Z"
   },
   {
-    "id": "",
-    "item": "Baked beans",
-    "amount": 12.23,
-    "date": "2025-03-15T16:39:03.398961Z"
-  },
-  {
-    "id": "",
-    "item": "Baked Beans",
-    "amount": 2.25,
-    "date": "2025-03-15T21:05:19.517602Z"
-  },
-  {
-    "id": "",
+    "id": "2",
     "item": "Baked Beans",
     "amount": 2.25,
     "date": "2025-03-15T21:05:24.571137Z"
   },
   {
-    "id": "",
-    "item": "Baked Beans",
-    "amount": 2.25,
-    "date": "2025-03-16T09:41:36.625942Z"
-  },
-  {
-    "id": "",
-    "item": "Baked Beans",
-    "amount": 2.25,
-    "date": "2025-03-16T09:42:03.062366Z"
-  },
-  {
-    "id": "",
-    "item": "Baked Beans",
-    "amount": 2.25,
-    "date": "2025-03-16T09:42:20.077551Z"
-  },
-  {
-    "id": "",
-    "item": "Baked Beans",
-    "amount": 2.25,
-    "date": "2025-03-16T09:42:33.681714Z"
-  },
-  {
-    "id": "",
-    "item": "Baked Beans",
-    "amount": 2.25,
-    "date": "2025-03-16T09:42:39.806592Z"
-  },
-  {
-    "id": "",
-    "item": "Baked Beans",
-    "amount": 2.25,
-    "date": "2025-03-16T09:45:41.792842Z"
-  },
-  {
-    "id": "",
-    "item": "Baked Beans",
-    "amount": 2.25,
-    "date": "2025-03-16T09:46:32.895291Z"
-  },
-  {
-    "id": "",
-    "item": "Bicycle",
-    "amount": 200,
-    "date": "2025-03-16T10:27:38.313907Z"
-  },
-  {
-    "id": "",
-    "item": "Bicycle",
-    "amount": 200,
-    "date": "2025-03-16T10:27:53.054748Z"
-  },
-  {
-    "id": "",
-    "item": "Bicycle",
-    "amount": 200,
-    "date": "2025-03-16T10:28:10.695211Z"
-  },
-  {
-    "id": "",
-    "item": "Bicycle",
-    "amount": 200,
-    "date": "2025-03-16T10:28:15.987775Z"
-  },
-  {
-    "id": "",
-    "item": "Ice cream",
-    "amount": 2.99,
-    "date": "2025-03-16T15:43:41.793697Z"
-  },
-  {
-    "id": "",
-    "item": "ice cream",
-    "amount": 2.99,
-    "date": "2025-03-16T16:15:22.366666Z"
-  },
-  {
-    "id": "",
-    "item": "ice cream",
-    "amount": 2.99,
-    "date": "2025-03-16T16:15:34.643611Z"
-  },
-  {
-    "id": "",
-    "item": "Ice cream",
-    "amount": 2.99,
-    "date": "2025-03-16T16:29:17.164399Z"
-  },
-  {
-    "id": "",
-    "item": "Ice cream",
-    "amount": 2.99,
-    "date": "2025-03-16T16:29:50.009186Z"
-  },
-  {
-    "id": "",
-    "item": "Ice cream",
-    "amount": 2.99,
-    "date": "2025-03-16T16:30:16.788224Z"
-  },
-  {
-    "id": "",
-    "item": "Ice cream",
-    "amount": 2.99,
-    "date": "2025-03-16T16:30:24.826695Z"
-  },
-  {
-    "id": "",
-    "item": "Ice cream",
-    "amount": 2.99,
-    "date": "2025-03-16T16:30:31.423437Z"
-  },
-  {
-    "id": "",
-    "item": "Ice cream",
-    "amount": 2.99,
-    "date": "2025-03-16T16:30:38.714477Z"
-  },
-  {
-    "id": "",
+    "id": "3",
     "item": "Ice cream",
     "amount": 2.99,
     "date": "2025-03-16T16:39:29.620401Z"
   },
   {
-    "id": "",
+    "id": "4",
     "item": "Ice cream",
     "amount": 2.99,
-    "date": "2025-03-16T16:40:35.641106Z"
+    "date": "2025-03-16T18:03:52.947235Z"
   },
   {
-    "id": "",
+    "id": "5",
     "item": "Ice cream",
     "amount": 2.99,
-    "date": "2025-03-16T16:42:10.837734Z"
-  },
-  {
-    "id": "",
-    "item": "Ice cream",
-    "amount": 2.99,
-    "date": "2025-03-16T16:42:16.48072Z"
-  },
-  {
-    "id": "",
-    "item": "Ice cream",
-    "amount": 2.99,
-    "date": "2025-03-16T16:42:31.325361Z"
-  },
-  {
-    "id": "",
-    "item": "Ice cream",
-    "amount": 2.99,
-    "date": "2025-03-16T16:44:47.135861Z"
-  },
-  {
-    "id": "",
-    "item": "Ice cream",
-    "amount": 2.99,
-    "date": "2025-03-16T16:48:51.087145Z"
-  },
-  {
-    "id": "",
-    "item": "Ice cream",
-    "amount": 2.99,
-    "date": "2025-03-16T16:48:59.388226Z"
+    "date": "2025-03-16T18:03:55.478424Z"
   }
 ]

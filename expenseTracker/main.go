@@ -1,8 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
 
@@ -26,9 +24,10 @@ func main() {
 	// 	fmt.Println("error calculating items exepenses")
 	// }
 
-	count, err := countItemExpenses("ice cream")
-	if err != nil {
-		fmt.Println("error getting the count")
-	}
-	fmt.Println(count)
+	// count, err := countItemExpenses("ice cream")
+	// if err != nil {
+	// 	fmt.Println("error getting the count")
+	// }
+	// fmt.Println(count)
+
 }

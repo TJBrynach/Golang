@@ -4,7 +4,7 @@ import "fmt"
 
 func main() {
 
-	err := addExpense("Ice cream", 2.99)
+	err := addExpense("Pizz", 24.99)
 	if err != nil {
 		fmt.Printf("error adding expense, %v", err)
 	}
@@ -29,5 +29,6 @@ func main() {
 	// 	fmt.Println("error getting the count")
 	// }
 	// fmt.Println(count)
+	HandleCLI()
 
 }

@@ -18,6 +18,8 @@ func (e Expense) Display() string {
 	return fmt.Sprintf("%s: £%.2f", e.Item, e.Amount)
 }
 
+func (e Expense) IdIncrement() int {}
+
 func addExpense(item string, amount float32) error {
 
 	new_expense := Expense{
@@ -97,12 +99,16 @@ func countItemExpenses(item string) (int16, error) {
 }
 
 func deleteExpense(item string) error {
+	//
 	content, err := readJSON("expenses.json")
 	if err != nil {
 		return fmt.Errorf("error reading file: %v", err)
 	}
 
 	lowerItem := strings.ToLower(item)
+
+	for _, e := range content {
+	}
 
 	return nil
 }

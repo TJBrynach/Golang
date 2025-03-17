@@ -1,13 +1,11 @@
 package main
 
-import "fmt"
-
 func main() {
 
-	err := addExpense("Pizz", 24.99)
-	if err != nil {
-		fmt.Printf("error adding expense, %v", err)
-	}
+	// err := addExpense("Pizz", 24.99)
+	// if err != nil {
+	// 	fmt.Printf("error adding expense, %v", err)
+	// }
 
 	// err = listExpenses()
 	// if err != nil {

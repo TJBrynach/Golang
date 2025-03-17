@@ -49,24 +49,28 @@ func addExpense(reader *bufio.Reader) error {
 	item := strings.TrimSpace(description)
 
 	fmt.Println("How much did it cost: ")
-	amount, _ := reader.ReadString('\n')
-	amount = strings.TrimSpace(amount)
+	amountStr, _ := reader.ReadString('\n')
+	amountStr = strings.TrimSpace(amountStr)
 
-	amount, err := strconv.ParseFloat(amount, 64)
+	amount64, err := strconv.ParseFloat(amountStr, 64)
 	if err != nil {
-		fmt.Println("Invalid amount. Please enter a valid number.")
-		return
+		return fmt.Errorf("invalid amount. Please enter a valid number.")
 	}
+	amount := float32(amount64)
+
 	new_expense := Expense{
 		ID:     new_id,
 		Item:   item,
 		Amount: amount,
 		Date:   time.Now(),
 	}
-	err := updateJSON(new_expense)
+
+	err = updateJSON(new_expense)
 	if err != nil {
 		return fmt.Errorf("error writing to file: %v", err)
 	}
+
+	fmt.Println(new_expense.Display())
 	return nil
 }
 
@@ -90,19 +94,21 @@ func calcExpenses() error {
 	}
 	var totalExpenses float32
 	for _, e := range content {
-		fmt.Println(e.Amount)
 		totalExpenses += e.Amount
 	}
-	fmt.Printf("Total Expenses: %.2f\n", totalExpenses)
+	fmt.Printf("Total Expenses: £%.2f\n", totalExpenses)
 	return nil
 }
 
-func calcItemExpenses(item string) error {
+func calcItemExpenses(reader *bufio.Reader) error {
 	const fileName = "expenses.json"
 	content, err := readJSON(fileName)
 	if err != nil {
 		return fmt.Errorf("return x")
 	}
+	fmt.Println("Which item would you like calculate expenses for?")
+	item, _ := reader.ReadString('\n')
+	item = strings.TrimSpace(item)
 	// set to lower case
 	lowerItem := strings.ToLower(item)
 
@@ -113,7 +119,7 @@ func calcItemExpenses(item string) error {
 		}
 	}
 
-	fmt.Printf("Total expenses for %v: %.2f", item, itemTotalExpenses)
+	fmt.Printf("Total expenses for %v: £%.2f", item, itemTotalExpenses)
 	return nil
 }
 

@@ -140,17 +140,38 @@ func countItemExpenses(item string) (int16, error) {
 	return counter, nil
 }
 
-// func deleteExpense(item string) error {
-// 	//
-// 	content, err := readJSON("expenses.json")
-// 	if err != nil {
-// 		return fmt.Errorf("error reading file: %v", err)
-// 	}
+func summary() error {
+	content, err := readJSON("expenses.json")
+	if err != nil {
+		return fmt.Errorf("error reading json to summarise:%v", err)
+	}
+	m := make(map[string]float32)
+	for _, e := range content {
+		_, exists := m[e.Item]
+		if exists == false {
+			m[e.Item] = float32(e.Amount)
+		} else {
+			m[e.Item] += float32(e.Amount)
+		}
+	}
+	for item, amount := range m {
+		fmt.Println(item, ": £", amount)
+	}
+	// loop through and count per item
+	return nil
+}
 
-// 	// lowerItem := strings.ToLower(item)
+func deleteExpense(reader *bufio.Reader) error {
+	//
+	content, err := readJSON("expenses.json")
+	if err != nil {
+		return fmt.Errorf("error reading file: %v", err)
+	}
 
-// 	// for _, e := range content {
-// 	// }
+	// lowerItem := strings.ToLower(item)
 
-// 	return nil
-// }
+	// for _, e := range content {
+	// }
+
+	return nil
+}

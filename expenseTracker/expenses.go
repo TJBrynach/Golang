@@ -2,7 +2,9 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -167,11 +169,34 @@ func deleteExpense(reader *bufio.Reader) error {
 	if err != nil {
 		return fmt.Errorf("error reading file: %v", err)
 	}
+	fmt.Println("which item would you like to delete?")
+	item, _ := reader.ReadString('\n')
+	item = strings.ToLower(strings.TrimSpace(item))
 
-	// lowerItem := strings.ToLower(item)
+	for _, e := range content {
+		if strings.ToLower(e.Item) == item {
+			fmt.Println(e.ID, e.Display())
+		}
+	}
+	fmt.Println("which ID should be removed? ")
+	id, _ := reader.ReadString('\n')
+	id = strings.TrimSpace(id)
 
-	// for _, e := range content {
-	// }
+	var newContent []Expense
+	for _, e := range content {
+		if e.ID != id {
+			newContent = append(newContent, e)
+		}
+	}
+	updatedJSON, err := json.MarshalIndent(newContent, "", "  ")
+	if err != nil {
+		return fmt.Errorf("error writing new content: %v", err)
+	}
 
+	err = os.WriteFile("expenses.json", updatedJSON, 0644)
+	if err != nil {
+		return fmt.Errorf("error actually writing new content: %v", err)
+	}
+	fmt.Println("item deleted")
 	return nil
 }

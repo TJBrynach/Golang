@@ -1,7 +1,7 @@
 You will build a Terminal User Interface (TUI) application that allows users to convert currency using live exchange rates fetched from a public API. The interface will be developed using the tview package, which is a popular TUI framework in Go.
 Features:
 
-    Fetch real-time exchange rates from a public API.
+    Fetch real-time exchange rates from a public API. DONE
     Display available currencies in a dropdown menu.
     Allow users to enter an amount and select currencies for conversion.
     Show the converted amount dynamically.

@@ -1,0 +1,50 @@
+Project: Goroutine Benchmark
+Objective
+
+You're building a small benchmarking program to test how multiple goroutines perform under concurrent execution.
+- Observing how different factors—like the number of goroutines, the type of work, or the use of buffered vs. unbuffered channels—affect performance.
+
+What to Think About
+
+- How does concurrency improve performance (or not) in this context?
+- What are the trade-offs in using more goroutines?
+- How do channels influence coordination and timing?
+- Does using a buffered channel change throughput or latency?
+
+channels commmunicate between goroutines & allow them to sync up
+
+ch := make(chan int)
+this creates an unbuffered channel of type int
+
+func sendValue(ch chan int) {
+	ch <- 32 // send value 42
+}
+
+func main() {
+	// initiate unbuffered int channel
+	ch := make(chan int)
+
+	go sendValue(ch)
+
+	value := <-ch //receive from channel
+
+	fmt.Println("Received: ", value)
+}
+
+now for buffered channels
+
+func main() {
+	// initiate unbuffered int channel
+	ch := make(chan int, 2)
+
+	ch <- 1
+	ch <- 2
+	fmt.Println(<-ch)
+	fmt.Println(<-ch)
+}
+
+in that example no time/sleep is required as the buffered channel takes that into account 
+
+ch <- x // send x to channel
+x := <-ch // receive from the channel 
+fmt.Println(<-ch) // read whats on the channel

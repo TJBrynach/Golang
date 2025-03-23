@@ -2,7 +2,7 @@ You will build a Terminal User Interface (TUI) application that allows users to 
 Features:
 
     Fetch real-time exchange rates from a public API. DONE
-    Display available currencies in a dropdown menu.
+    Display available currencies in a dropdown menu. DONE
     Allow users to enter an amount and select currencies for conversion.
     Show the converted amount dynamically.
     Provide a refresh button to update exchange rates.

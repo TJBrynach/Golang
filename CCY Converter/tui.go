@@ -41,7 +41,7 @@ func gui() {
 				resultField.SetText("[red]Invalid amount![-]")
 			}
 			result := convertCCY(rates, from, to, amount)
-			resultField.SetText(fmt.Sprintf("[green]Converted:%s, %s, %.2f %.2f[-]", from, to, amount, result))
+			resultField.SetText(fmt.Sprintf("[green]Converted:%s, %.2f[-]", to, result))
 		})
 
 	flex := tview.NewFlex().
@@ -52,8 +52,7 @@ func gui() {
 		AddItem(resultField, 1, 0, true).
 		AddItem(button, 1, 0, true)
 
-	flex.SetBorder(true).SetTitle("CCY Converter")
-	// // _, selectedBase := form.GetFormItem(0).(*tview.DropDown).GetCurrentOption()
+	flex.SetBorder(true).SetTitle("CCY Converter").SetTitleAlign(tview.AlignLeft)
 
 	if err := app.SetRoot(flex, true).SetFocus(flex).EnableMouse(true).Run(); err != nil {
 		panic(err)

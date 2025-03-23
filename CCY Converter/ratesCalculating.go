@@ -7,17 +7,17 @@ import (
 	"net/http"
 )
 
-const API_URL = "https://v6.exchangerate-api.com/v6/c5492bb0169c65d93a2cdf88/latest/"
+const API_URL = "https://v6.exchangerate-api.com/v6/c5492bb0169c65d93a2cdf88/latest/USD/"
 
 type ExchangeRates struct {
 	Base            string             `json:"base_code"`
 	ConversionRates map[string]float64 `json:"conversion_rates"`
 }
 
-func getExchangeRates(base string) (ExchangeRates, error) {
+func getExchangeRates() (ExchangeRates, error) {
 	var rates ExchangeRates
-	fmt.Println(API_URL + base)
-	resp, err := http.Get(API_URL + base)
+	fmt.Println(API_URL)
+	resp, err := http.Get(API_URL)
 	if err != nil {
 		return rates, err
 	}
@@ -34,4 +34,23 @@ func getExchangeRates(base string) (ExchangeRates, error) {
 	}
 
 	return rates, nil
+}
+
+func getRate(rates ExchangeRates, far string) float64 {
+	for key, value := range rates.ConversionRates {
+		if key == far {
+			return value
+		}
+	}
+	return 0
+}
+
+func ccyOptions(rates ExchangeRates) []string {
+	options := []string{}
+
+	for ccy, _ := range rates.ConversionRates {
+		options = append(options, ccy)
+	}
+
+	return options
 }

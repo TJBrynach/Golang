@@ -1,9 +1,13 @@
 package main
 
-import "github.com/rivo/tview"
+import (
+	"fmt"
+	"strconv"
+
+	"github.com/rivo/tview"
+)
 
 func gui() {
-	// box := tview.NewBox().SetBorder(true).SetTitle(" CCY Converter ")
 
 	rates, err := getExchangeRates()
 	if err != nil {
@@ -30,8 +34,14 @@ func gui() {
 
 	button := tview.NewButton("Convert").
 		SetSelectedFunc(func() {
-			from, _ := baseCurrency.GetCurrentOption()
-			to, _ := farCurrency.GetCurrentOption()
+			_, from := baseCurrency.GetCurrentOption()
+			_, to := farCurrency.GetCurrentOption()
+			amount, err := strconv.ParseFloat(amountField.GetText(), 64)
+			if err != nil {
+				resultField.SetText("[red]Invalid amount![-]")
+			}
+			result := convertCCY(rates, from, to, amount)
+			resultField.SetText(fmt.Sprintf("[green]Converted:%s, %s, %.2f %.2f[-]", from, to, amount, result))
 		})
 
 	flex := tview.NewFlex().
@@ -42,30 +52,11 @@ func gui() {
 		AddItem(resultField, 1, 0, true).
 		AddItem(button, 1, 0, true)
 
-	// // bases := []string{"GBP", "USD", "SGD", "EUR", "NOK", "SEK", "HKD"}
-	// // // var selectedBase string
-
-	// // // form := tview.NewForm().
-	// // // 	AddDropDown("Select Base currency (hit enter): ", bases, 0, nil).
-	// // // 	AddInputField("Amount in base currency to be converted: ", "", 20, nil, nil).
-	// // // 	AddButton("Convert", getRate(rates, "EUR")).
-	// // // 	AddButton("Quit", func() { app.Stop() })
-	// // // form.SetBorder(true).SetTitle("CCY Converter").SetTitleAlign(tview.AlignLeft)
-
+	flex.SetBorder(true).SetTitle("CCY Converter")
 	// // _, selectedBase := form.GetFormItem(0).(*tview.DropDown).GetCurrentOption()
 
 	if err := app.SetRoot(flex, true).SetFocus(flex).EnableMouse(true).Run(); err != nil {
 		panic(err)
 	}
 
-	// base := "USD"
-
-	// far := "GBP"
-
-	// for key, value := range rates.ConversionRates {
-	// 	if key == far {
-	// 		fmt.Println(selectedBase, key, value)
-	// 	}
-
-	// }
 }

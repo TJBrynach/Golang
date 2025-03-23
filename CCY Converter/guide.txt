@@ -3,6 +3,6 @@ Features:
 
     Fetch real-time exchange rates from a public API. DONE
     Display available currencies in a dropdown menu. DONE
-    Allow users to enter an amount and select currencies for conversion.
-    Show the converted amount dynamically.
-    Provide a refresh button to update exchange rates.
+    Allow users to enter an amount and select currencies for conversion. DONE
+    Show the converted amount dynamically. DONE
+    Provide a refresh button to update exchange rates. 

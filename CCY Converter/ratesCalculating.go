@@ -54,3 +54,10 @@ func ccyOptions(rates ExchangeRates) []string {
 
 	return options
 }
+
+func convertCCY(rates ExchangeRates, from string, to string, amount float64) float64 {
+	fromRate := rates.ConversionRates[from]
+	toRate := rates.ConversionRates[to]
+	result := amount * toRate / fromRate
+	return result
+}

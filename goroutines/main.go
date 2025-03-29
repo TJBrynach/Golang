@@ -1,22 +1,35 @@
 package main
 
 import (
-	"fmt"
+	"io"
+	"log"
+	"net"
+	"time"
 )
 
-func worker(id int, ch chan string) {
-	ch <- fmt.Sprintf("Worker %d done", id)
+func handleConn(c net.Conn) {
+	defer c.Close()
+	for {
+		_, err := io.WriteString(c, time.Now().Format("15:04:05\n"))
+		if err != nil {
+			return //
+		}
+		time.Sleep(1 * time.Second)
+	}
 }
 
 func main() {
-	// initiate unbuffered int channel
-	ch := make(chan string)
-
-	for i := 0; i <= 3; i++ {
-		go worker(i, ch)
+	listener, err := net.Listen("tcp", "localhost:8000")
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	for i := 1; i <= 3; i++ {
-		fmt.Println(<-ch)
+	for {
+		conn, err := listener.Accept()
+		if err != nil {
+			log.Print(err)
+			continue
+		}
+		handleConn(conn)
 	}
 }

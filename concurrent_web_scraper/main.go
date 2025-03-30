@@ -1,36 +1,29 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"log"
-	"net/http"
+	"sync"
+	"time"
 )
 
-const api_key = "ce9340b365a450eec13c60f1e28607f0"
-
-type WeatherData struct {
-	City string `json:"name"`
-	Main struct {
-		Humidity int `json:"humidity"`
-	} `json:"main"`
-}
-
 func main() {
-	var data WeatherData
-	city := "london"
-	url := fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s", city, api_key)
-	resp, err := http.Get(url)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer resp.Body.Close()
+	startTime := time.Now()
 
-	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
-		fmt.Println("hello", data)
-		return
-	} else {
-		fmt.Println(err)
+	var wg sync.WaitGroup
+
+	cities := []string{"london", "toronto", "singapore", "tokyo", "istanbul", "washington"}
+
+	for _, city := range cities {
+		wg.Add(1)
+
+		c := city
+
+		go func(c string) {
+			defer wg.Done()
+			RetrieveWeather(c)
+		}(c)
+
 	}
-	fmt.Println(data)
+	wg.Wait()
+	fmt.Println("complete", time.Since(startTime))
 }

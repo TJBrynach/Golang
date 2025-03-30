@@ -6,3 +6,4 @@
 5. CCY Converter
 6. Weather API - concurrent calls
 7. Web Title Scraper - concurrent calls
+8. Web Scraper using Colly [PAUSED]

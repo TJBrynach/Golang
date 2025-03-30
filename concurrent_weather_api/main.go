@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"sync"
 	"time"
 )
@@ -20,7 +21,12 @@ func main() {
 
 		go func(c string) {
 			defer wg.Done()
-			RetrieveWeather(c)
+			weatherData, err := RetrieveWeather(c)
+			if err != nil {
+				log.Println(err)
+				return
+			}
+			fmt.Printf("The humidity if %s is %v \n", weatherData.City, weatherData.Main.Humidity)
 		}(c)
 
 	}

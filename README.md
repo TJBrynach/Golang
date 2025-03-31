@@ -7,3 +7,15 @@
 6. Weather API - concurrent calls
 7. Web Title Scraper - concurrent calls
 8. Web Scraper using Colly [PAUSED]
+
+
+
+TODO:
+1. Simple Web Server
+2. BookStore API
+3. ExpenseTracker + PostGres
+4. REST API for notetaking app
+5. CLI Stock PriceTracker - Finnhub?
+6. Basic Slack bot
+
+ 

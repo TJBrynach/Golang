@@ -22,11 +22,26 @@ func sayHello(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
-	http.HandleFunc("/", getRoot)
-	http.HandleFunc("/hello", sayHello)
-	err := http.ListenAndServe(":8080", nil)
+	// http.HandleFunc("/", getRoot)
+	// http.HandleFunc("/hello", sayHello)
 
+	// err := http.ListenAndServe(":8080", nil)
+
+	// if errors.Is(err, http.ErrServerClosed) {
+	// 	fmt.Printf("server closed \n")
+	// } else if err != nil {
+	// 	fmt.Printf("Error starting server with port :8080", err)
+	// 	os.Exit(1)
+	// }
+
+	// introducing a MULTIPLEXER
+
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", getRoot)
+	mux.HandleFunc("/hello", sayHello)
+
+	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
-		fmt.Println("Error serving the port :8080", err)
+		fmt.Println("error:", err)
 	}
 }

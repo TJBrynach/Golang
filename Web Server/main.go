@@ -22,5 +22,8 @@ func loadHtml(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/", getRoot)
 	http.HandleFunc("/test", loadHtml)
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		fmt.Println("error listening to port:", err)
+	}
 }

@@ -36,3 +36,7 @@
     Use environment variables for port configuration.
 
     Add a template engine later (e.g., Go’s html/template) for dynamic content.
+
+Context Usefulness:
+
+    You're using ctx.Value(keyServerAddr) in the getRoot handler, but you're not setting this context value anywhere in your current code. Consider either setting it up properly or removing it if it's not yet needed.

@@ -7,8 +7,6 @@ import (
 
 // this is where we will illustrate our cli client
 
-const fileName = "todolist.csv"
-
 func HandleCLI() {
 	fmt.Println("Debug: CLI started:")
 	if len(os.Args) < 2 {
@@ -27,13 +25,13 @@ func HandleCLI() {
 			return
 		}
 		title := os.Args[2]
-		task, err := createTask(title, fileName)
+		err := createTask(title, fileName)
 
 		if err != nil {
 			fmt.Println("Error adding task:", err)
 			return
 		}
-		fmt.Println("Task Added: ", task.Title)
+		// fmt.Println("Task Added: ", task.Title)
 
 	case "list":
 		if len(os.Args) < 2 {

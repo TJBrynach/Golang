@@ -24,7 +24,7 @@ func (t Task) Display() string {
 	return fmt.Sprintf("[%s] %s (Created: %s)", status, t.Title, t.CreatedAt.Format("2023-15-10 15:04:23"))
 }
 
-func createTask(title string, fileName string) (Task, error) {
+func createTask(title string, fileName string) error {
 	task := Task{
 		ID:        uuid.New().String(),
 		Title:     title,
@@ -33,9 +33,9 @@ func createTask(title string, fileName string) (Task, error) {
 	}
 
 	if err := saveToCSV(task, fileName); err != nil {
-		return Task{}, err
+		return err
 	}
-	return task, nil
+	return nil
 }
 
 func deleteTasks(title string, fileName string) error {

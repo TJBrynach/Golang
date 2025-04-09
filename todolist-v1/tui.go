@@ -58,11 +58,14 @@ func tui() {
 
 		})
 
-	flex := tview.NewFlex().
+	rightColumn := tview.NewFlex().
 		SetDirection(tview.FlexRow).
-		AddItem(table, 0, 1, true).
-		AddItem(addTask, 0, 1, true).
-		AddItem(addTaskButton, 0, 1, true)
+		AddItem(addTask, 0, 2, false).
+		AddItem(addTaskButton, 3, 0, false)
+
+	flex := tview.NewFlex().
+		AddItem(table, 80, 1, true).
+		AddItem(rightColumn, 0, 2, false)
 
 	flex.SetBorder(true).SetTitle("  ToDoList  ").SetTitleAlign(tview.AlignCenter)
 

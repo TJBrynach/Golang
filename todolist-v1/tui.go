@@ -10,6 +10,25 @@ import (
 
 const fileName = "todolist.csv"
 
+func loadTable(table *tview.Table, records [][]string) {
+
+	table.Clear()
+
+	for rowIndex, row := range records {
+		for colIndex, cell := range row {
+			if colIndex != 0 {
+				// need to set up logic to only show a row if its not completed
+				tablecell := tview.NewTableCell(cell).
+					SetAlign(tview.AlignCenter)
+
+				table.SetCell(rowIndex, colIndex, tablecell)
+			}
+
+		}
+	}
+
+}
+
 func tui() {
 	app := tview.NewApplication()
 
@@ -29,19 +48,7 @@ func tui() {
 		fmt.Errorf("error reading the file: %v", err)
 	}
 
-	for rowIndex, row := range records {
-		for colIndex, cell := range row {
-			if colIndex != 0 {
-				// need to set up logic to only show a row if its not completed
-				tablecell := tview.NewTableCell(cell).
-					SetAlign(tview.AlignCenter)
-
-				table.SetCell(rowIndex, colIndex, tablecell)
-			}
-
-		}
-
-	}
+	loadTable(table, records)
 
 	addTask := tview.NewInputField().
 		SetLabel("New Task: ").
@@ -54,6 +61,11 @@ func tui() {
 			if err != nil {
 				fmt.Println(err)
 			}
+			records, err = readTasks(fileName)
+			if err != nil {
+				fmt.Println(err)
+			}
+			loadTable(table, records)
 			// add a confirmation messge or refresh ui to add
 
 		})

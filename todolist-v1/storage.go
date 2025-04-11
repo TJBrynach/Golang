@@ -87,3 +87,20 @@ func listTasks(fileName string) ([]Task, error) {
 	}
 	return tasks, nil
 }
+
+func readTasks(fileName string) ([][]string, error) {
+	file, err := os.Open(fileName)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	records, err := reader.ReadAll()
+	if err != nil {
+		fmt.Println(err)
+	}
+	return records, nil
+
+}

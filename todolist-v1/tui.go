@@ -4,30 +4,12 @@ import (
 	"encoding/csv"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/rivo/tview"
 )
 
 const fileName = "todolist.csv"
-
-func loadTable(table *tview.Table, records [][]string) {
-
-	table.Clear()
-
-	for rowIndex, row := range records {
-		for colIndex, cell := range row {
-			if colIndex != 0 {
-				// need to set up logic to only show a row if its not completed
-				tablecell := tview.NewTableCell(cell).
-					SetAlign(tview.AlignCenter)
-
-				table.SetCell(rowIndex, colIndex, tablecell)
-			}
-
-		}
-	}
-
-}
 
 func tui() {
 	app := tview.NewApplication()
@@ -54,25 +36,47 @@ func tui() {
 		SetLabel("New Task: ").
 		SetFieldWidth(50)
 
+	textView := tview.NewTextView()
+
 	addTaskButton := tview.NewButton("Add").SetSelectedFunc(
 		func() {
 			task := addTask.GetText()
-			err = createTask(task, fileName)
-			if err != nil {
-				fmt.Println(err)
+			if len(task) <= 3 {
+				go func() {
+					textView.SetText("Invalid Task")
+					time.Sleep(3 * time.Second)
+					app.QueueUpdateDraw(func() {
+						textView.SetText("")
+					})
+				}()
+			} else {
+				err = createTask(task, fileName)
+				if err != nil {
+					fmt.Println(err)
+				}
+				records, err = readTasks(fileName)
+				if err != nil {
+					fmt.Println(err)
+				}
+				loadTable(table, records)
+
+				go func() {
+					textView.SetText("Task Successfully added")
+					time.Sleep(3 * time.Second)
+					app.QueueUpdateDraw(func() {
+						textView.SetText("")
+					})
+				}()
+
 			}
-			records, err = readTasks(fileName)
-			if err != nil {
-				fmt.Println(err)
-			}
-			loadTable(table, records)
 			// add a confirmation messge or refresh ui to add
 
 		})
 
 	rightColumn := tview.NewFlex().
 		SetDirection(tview.FlexRow).
-		AddItem(addTask, 0, 2, false).
+		AddItem(addTask, 0, 1, false).
+		AddItem(textView, 0, 2, false).
 		AddItem(addTaskButton, 3, 0, false)
 
 	flex := tview.NewFlex().

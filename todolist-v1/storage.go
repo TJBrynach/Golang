@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"time"
+
+	"github.com/rivo/tview"
 )
 
 func initCSV(fileName string) error {
@@ -102,5 +104,24 @@ func readTasks(fileName string) ([][]string, error) {
 		fmt.Println(err)
 	}
 	return records, nil
+
+}
+
+func loadTable(table *tview.Table, records [][]string) {
+
+	table.Clear()
+
+	for rowIndex, row := range records {
+		for colIndex, cell := range row {
+			if colIndex != 0 {
+				// need to set up logic to only show a row if its not completed
+				tablecell := tview.NewTableCell(cell).
+					SetAlign(tview.AlignCenter)
+
+				table.SetCell(rowIndex, colIndex, tablecell)
+			}
+
+		}
+	}
 
 }

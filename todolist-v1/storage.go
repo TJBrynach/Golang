@@ -114,7 +114,7 @@ func loadTable(table *tview.Table, records [][]string) {
 	realrowIndex := 0
 
 	for _, row := range records {
-		if row[2] == "false" {
+		if row[2] == "true" {
 			continue
 		}
 		for colIndex, cell := range row {

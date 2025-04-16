@@ -111,17 +111,20 @@ func loadTable(table *tview.Table, records [][]string) {
 
 	table.Clear()
 
-	for rowIndex, row := range records {
+	realrowIndex := 0
+
+	for _, row := range records {
+		if row[2] == "false" {
+			continue
+		}
 		for colIndex, cell := range row {
-			if colIndex != 0 {
-				// need to set up logic to only show a row if its not completed
+			if colIndex != 0 && colIndex != 2 {
 				tablecell := tview.NewTableCell(cell).
 					SetAlign(tview.AlignCenter)
-
-				table.SetCell(rowIndex, colIndex, tablecell)
+				table.SetCell(realrowIndex, colIndex, tablecell)
 			}
-
 		}
+		realrowIndex++
 	}
 
 }

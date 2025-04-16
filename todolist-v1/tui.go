@@ -14,7 +14,7 @@ const fileName = "todolist.csv"
 func tui() {
 	app := tview.NewApplication()
 
-	table := tview.NewTable().SetBorders(true).SetSelectable(true, true)
+	table := tview.NewTable().SetBorders(true).SetSelectable(true, false)
 
 	file, err := os.Open(fileName)
 
@@ -23,7 +23,7 @@ func tui() {
 	}
 
 	defer file.Close()
-
+	// updates
 	reader := csv.NewReader(file)
 	records, err := reader.ReadAll()
 	if err != nil {

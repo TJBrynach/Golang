@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/rivo/tview"
 )
 
 type Task struct {
@@ -123,8 +122,4 @@ func completeTask(title string, fileName string) error {
 
 	fmt.Println(title, " marked as complete")
 	return nil
-}
-
-func markTaskAsDone(table *tview.Table, row int) {
-
 }

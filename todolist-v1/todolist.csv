@@ -3,14 +3,13 @@ ID,Title,Completed,CreatedAt
 6b4b309a-0d78-441d-af5d-5b1519038cd5,creating a to do list,true,2025-02-19T18:03:04Z
 2b1d41ca-e66b-4ca1-8a2f-8816eb7274d9,clean the dishes,true,2025-02-19T18:03:08Z
 ccaf3043-5166-466c-8910-e52ed59539fe,creating a to do list,true,2025-02-19T18:03:08Z
-14443518-37c6-4700-b460-8dbf8b312a21,add task,true,2025-04-11T19:08:42+01:00
-e99ee4b1-2b4a-4e93-8476-6a95db3cfb05,add task,true,2025-04-11T19:08:42+01:00
-da8a6754-a3c4-4e1b-8a8c-1ff9ee008e72,testing,true,2025-04-11T19:09:18+01:00
-ad1accfd-3672-4514-860c-57186ad7e2d6,testing,true,2025-04-11T19:09:19+01:00
-cec53007-8f63-4492-b61b-9919f034aeb5,asdasdasd,true,2025-04-11T19:10:30+01:00
 42db4397-2037-41f2-8d01-d39643e78c35,test,true,2025-04-11T19:14:33+01:00
-69dccd77-f955-4cfe-bdcd-6c464e3ad189,testing,true,2025-04-11T19:14:37+01:00
 931bbe66-a4c3-4e54-bc9a-29b93dd61fea,I dont think so,true,2025-04-12T18:17:49+01:00
 2891e8e2-52fb-4dc5-b3aa-dcfb250ee388,Complete homework,true,2025-04-12T18:36:47+01:00
-f55b4ad6-0aab-4480-a200-4b8d9e521627,ssssss,true,2025-04-16T18:33:31+01:00
-d94f9b2f-61db-49d6-931b-7fbbcf334130,go to pub,false,2025-04-16T19:39:37+01:00
+741d9027-c0fa-43bd-aba7-e29312fc5525,go to pub with dan,true,2025-04-16T19:44:30+01:00
+2fc7d7db-6ba5-4a83-a0e5-576fa01fd639,check if appplet works,true,2025-04-17T12:26:08+01:00
+eddf039d-f32e-452e-adb0-e84d08b9ca6d,testing the todolist,true,2025-04-17T13:49:14+01:00
+fe25aba8-2d87-423b-a0f2-a4d362a5fcf9,hello,true,2025-04-17T15:57:42+01:00
+bafb3dbc-78c9-4b7d-b314-f332ccc49934,checking input clear works,true,2025-04-17T16:28:31+01:00
+efefae3f-e3af-45de-ab27-74daa3f5c6b9,checking focus,false,2025-04-17T16:39:09+01:00
+4f6646c0-95df-4c36-87de-827d68d91678,testing alert,false,2025-04-17T17:47:10+01:00

@@ -117,11 +117,14 @@ func loadTable(table *tview.Table, records [][]string) {
 		if row[2] == "true" {
 			continue
 		}
+
+		visibleColIndex := 0
 		for colIndex, cell := range row {
 			if colIndex != 0 && colIndex != 2 {
 				tablecell := tview.NewTableCell(cell).
 					SetAlign(tview.AlignCenter)
-				table.SetCell(realrowIndex, colIndex, tablecell)
+				table.SetCell(realrowIndex, visibleColIndex, tablecell)
+				visibleColIndex++
 			}
 		}
 		realrowIndex++

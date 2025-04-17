@@ -32,9 +32,25 @@ func createTask(title string, fileName string) error {
 		CreatedAt: time.Now(),
 	}
 
-	if err := saveToCSV(task, fileName); err != nil {
+	records, err := readTasks(fileName)
+	if err != nil {
+		fmt.Println(err)
 		return err
 	}
+	count := 0
+	for _, record := range records {
+		if task.Title == record[1] && record[3] != "false" {
+			count++
+		}
+	}
+	if count > 0 {
+		return fmt.Errorf("duplicate task")
+	} else {
+		if err := saveToCSV(task, fileName); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 

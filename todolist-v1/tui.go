@@ -17,10 +17,14 @@ func tui() {
 
 	table := tview.NewTable().SetBorders(true).SetSelectable(true, false)
 
+	//initialise textView
+	textView := tview.NewTextView()
+	textView.SetDynamicColors(true)
+
 	file, err := os.Open(fileName)
 
 	if err != nil {
-		fmt.Println("error opening the file: ", err)
+		textView.SetText(fmt.Sprintf("[red]error opening the file: %v[-]", err))
 	}
 
 	defer file.Close()
@@ -28,33 +32,14 @@ func tui() {
 	reader := csv.NewReader(file)
 	records, err := reader.ReadAll()
 	if err != nil {
-		fmt.Errorf("error reading the file: %v", err)
+		textView.SetText(fmt.Sprintf("[red]error reading the file: %v", err))
 	}
 
 	loadTable(table, records)
-	textView := tview.NewTextView()
 
 	addTask := tview.NewInputField().
 		SetLabel("New Task: ").
 		SetFieldWidth(50)
-
-	// table.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
-	// 	if event.Key() == tcell.KeyRune && event.Rune() == 'd' {
-	// 		row, _ := table.GetSelection()
-	// 		task := table.GetCell(row, 1).Text
-	// 		// deleteTasks(task, fileName)
-
-	// 		// records, err = readTasks(fileName)
-	// 		// if err != nil {
-	// 		// 	fmt.Println(err)
-	// 		// }
-	// 		// loadTable(table, records)
-	// 		newText := task + "has been deleted"
-	// 		textView.SetText(newText)
-	// 		return nil
-	// 	}
-	// 	return event
-	// })
 
 	table.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		switch event.Key() {
@@ -70,8 +55,7 @@ func tui() {
 					fmt.Println(err)
 				}
 				loadTable(table, records)
-				newText := task + " has been marked complete"
-				textView.SetText(newText)
+				textView.SetText(fmt.Sprintf("[green]%v has been marked complete[-]", task))
 
 				app.SetFocus(table)
 
@@ -87,33 +71,13 @@ func tui() {
 				}
 
 				loadTable(table, records)
-				newText := task + " has been deleted"
-				textView.SetText(newText)
+
+				textView.SetText(fmt.Sprintf("[green]%v has been deleted[-]", task))
 
 				app.SetFocus(table)
 
 				return nil
 			}
-		case tcell.KeyEnter:
-			task := addTask.GetText()
-			err = createTask(task, fileName)
-			if err != nil {
-				fmt.Println(err)
-			}
-			records, err = readTasks(fileName)
-			if err != nil {
-				fmt.Println(err)
-			}
-			loadTable(table, records)
-
-			go func() {
-				textView.SetText("Task Successfully added")
-				time.Sleep(3 * time.Second)
-				app.QueueUpdateDraw(func() {
-					textView.SetText("")
-				})
-			}()
-			return nil
 		}
 		return event
 	})
@@ -123,7 +87,7 @@ func tui() {
 			task := addTask.GetText()
 			if len(task) <= 3 {
 				go func() {
-					textView.SetText("Invalid Task")
+					textView.SetText("[red]Invalid Task[-]")
 					time.Sleep(3 * time.Second)
 					app.QueueUpdateDraw(func() {
 						textView.SetText("")
@@ -132,7 +96,7 @@ func tui() {
 			} else {
 				err = createTask(task, fileName)
 				if err != nil {
-					fmt.Println(err)
+					textView.SetText(fmt.Sprintf("[red]%v[-]", err))
 				}
 				records, err = readTasks(fileName)
 				if err != nil {
@@ -145,7 +109,7 @@ func tui() {
 				app.SetFocus(addTask)
 
 				go func() {
-					textView.SetText("Task Successfully added")
+					textView.SetText("[green]Task Successfully added[-]")
 					time.Sleep(3 * time.Second)
 					app.QueueUpdateDraw(func() {
 						textView.SetText("")

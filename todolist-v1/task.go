@@ -39,16 +39,16 @@ func createTask(title string, fileName string) error {
 	}
 	count := 0
 	for _, record := range records {
-		if task.Title == record[1] && record[3] != "false" {
+		if task.Title == record[1] && record[3] != "true" {
 			count++
 		}
 	}
-	if count > 0 {
-		return fmt.Errorf("duplicate task")
-	} else {
+	if count == 0 {
 		if err := saveToCSV(task, fileName); err != nil {
 			return err
 		}
+	} else {
+		return fmt.Errorf("duplicate task")
 	}
 
 	return nil

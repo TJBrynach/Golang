@@ -41,6 +41,55 @@ func tui() {
 		SetLabel("New Task: ").
 		SetFieldWidth(50)
 
+	addTaskButton := tview.NewButton("Add").SetSelectedFunc(
+		func() {
+			task := addTask.GetText()
+			if len(task) <= 3 {
+				go func() {
+					textView.SetText("[red]Invalid Task[-]")
+					time.Sleep(3 * time.Second)
+					app.QueueUpdateDraw(func() {
+						textView.SetText("")
+					})
+				}()
+			} else {
+				err := createTask(task, fileName)
+				if err != nil {
+					textView.SetText(fmt.Sprintf("[red]%v[-]", err))
+				} else {
+					records, err = readTasks(fileName)
+					if err != nil {
+						fmt.Println(err)
+					}
+					loadTable(table, records)
+
+					addTask.SetText("")
+
+					app.SetFocus(addTask)
+
+					go func() {
+						textView.SetText("[green]Task Succcessfully added[-]")
+						time.Sleep(3 * time.Second)
+						app.QueueUpdateDraw(func() {
+							textView.SetText("")
+						})
+					}()
+				}
+
+			}
+
+		})
+
+	rightColumn := tview.NewFlex().
+		SetDirection(tview.FlexRow).
+		AddItem(addTask, 0, 1, false).
+		AddItem(textView, 0, 2, false).
+		AddItem(addTaskButton, 2, 0, false)
+
+	flex := tview.NewFlex().
+		AddItem(table, 0, 1, true).
+		AddItem(rightColumn, 0, 1, false)
+
 	table.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		switch event.Key() {
 		case tcell.KeyRune:
@@ -81,54 +130,6 @@ func tui() {
 		}
 		return event
 	})
-
-	addTaskButton := tview.NewButton("Add").SetSelectedFunc(
-		func() {
-			task := addTask.GetText()
-			if len(task) <= 3 {
-				go func() {
-					textView.SetText("[red]Invalid Task[-]")
-					time.Sleep(3 * time.Second)
-					app.QueueUpdateDraw(func() {
-						textView.SetText("")
-					})
-				}()
-			} else {
-				err = createTask(task, fileName)
-				if err != nil {
-					textView.SetText(fmt.Sprintf("[red]%v[-]", err))
-				}
-				records, err = readTasks(fileName)
-				if err != nil {
-					fmt.Println(err)
-				}
-				loadTable(table, records)
-
-				addTask.SetText("")
-
-				app.SetFocus(addTask)
-
-				go func() {
-					textView.SetText("[green]Task Successfully added[-]")
-					time.Sleep(3 * time.Second)
-					app.QueueUpdateDraw(func() {
-						textView.SetText("")
-					})
-				}()
-
-			}
-
-		})
-
-	rightColumn := tview.NewFlex().
-		SetDirection(tview.FlexRow).
-		AddItem(addTask, 0, 1, false).
-		AddItem(textView, 0, 2, false).
-		AddItem(addTaskButton, 2, 0, false)
-
-	flex := tview.NewFlex().
-		AddItem(table, 0, 1, true).
-		AddItem(rightColumn, 0, 1, false)
 
 	flex.SetBorder(true).SetTitle("  ToDoList  ").SetTitleAlign(tview.AlignCenter)
 

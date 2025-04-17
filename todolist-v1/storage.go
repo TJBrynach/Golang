@@ -121,10 +121,24 @@ func loadTable(table *tview.Table, records [][]string) {
 		visibleColIndex := 0
 		for colIndex, cell := range row {
 			if colIndex != 0 && colIndex != 2 {
-				tablecell := tview.NewTableCell(cell).
-					SetAlign(tview.AlignCenter)
-				table.SetCell(realrowIndex, visibleColIndex, tablecell)
-				visibleColIndex++
+				if colIndex == 3 {
+					var formattedCell string
+					parsedTime, err := time.Parse(time.RFC3339, cell)
+					if err == nil {
+						formattedCell = parsedTime.Format("2006-01-02 15:04")
+					} else {
+						formattedCell = cell
+					}
+					tablecell := tview.NewTableCell(formattedCell).SetAlign(tview.AlignCenter)
+					table.SetCell(realrowIndex, visibleColIndex, tablecell)
+					visibleColIndex++
+				} else {
+					tablecell := tview.NewTableCell(cell).
+						SetAlign(tview.AlignCenter)
+					table.SetCell(realrowIndex, visibleColIndex, tablecell)
+					visibleColIndex++
+				}
+
 			}
 		}
 		realrowIndex++

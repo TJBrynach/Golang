@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -25,7 +26,26 @@ const (
 )
 
 func (t Task) wrappedTitle() string {
-	return ""
+
+	var finalList []string
+
+	words := strings.Split(t.Title, " ")
+
+	realIndex := 0
+
+	for index, word := range words {
+		m := index % 3
+
+		if m == 2 {
+			finalList = append(finalList, word)
+			finalList = append(finalList, "\n")
+		} else {
+			finalList = append(finalList, word)
+			realIndex++
+		}
+	}
+	finalString := strings.Join(finalList, " ")
+	return finalString
 }
 
 func (t Task) Display() string {

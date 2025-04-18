@@ -7,7 +7,7 @@
 
     ✅ Add input validation (e.g., prevent blank tasks or duplicates)
 
-    ✅ Refactor hard-coded CSV indices into named constants
+    ✅ Refactor hard-coded CSV indices into named constants DONE
 
     ✅ Normalize text input (e.g., trim spaces, lowercasing)
 

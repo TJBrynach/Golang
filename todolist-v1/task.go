@@ -16,6 +16,18 @@ type Task struct {
 	CreatedAt time.Time
 }
 
+// refactored csv into const
+const (
+	colID = iota
+	colTitle
+	colCompleted
+	colCreatedAt
+)
+
+func (t Task) wrappedTitle() string {
+	return ""
+}
+
 func (t Task) Display() string {
 	status := "X"
 	if t.Completed {
@@ -39,7 +51,7 @@ func createTask(title string, fileName string) error {
 	}
 	count := 0
 	for _, record := range records {
-		if task.Title == record[1] && record[3] != "true" {
+		if task.Title == record[colTitle] && record[colCompleted] == "false" {
 			count++
 		}
 	}
@@ -71,7 +83,7 @@ func deleteTasks(title string, fileName string) error {
 	taskDeleted := false
 
 	for i, record := range records {
-		if i == 0 || record[1] != title {
+		if i == colID || record[colTitle] != title {
 			updatedRecords = append(updatedRecords, record)
 		} else {
 			taskDeleted = true
@@ -115,7 +127,7 @@ func completeTask(title string, fileName string) error {
 	var updatedRecords [][]string
 
 	for i, record := range records {
-		if i == 0 || record[1] != title {
+		if i == colID || record[colTitle] != title {
 			updatedRecords = append(updatedRecords, record)
 		} else {
 			record[2] = "true"

@@ -46,7 +46,7 @@ func tui() {
 			task := addTask.GetText()
 			if len(task) <= 3 {
 				go func() {
-					textView.SetText("[red]Invalid Task[-]")
+					textView.SetText("[red]Invalid Task - too short[-]")
 					time.Sleep(3 * time.Second)
 					app.QueueUpdateDraw(func() {
 						textView.SetText("")
@@ -80,6 +80,11 @@ func tui() {
 
 		})
 
+	shortcutsInfo := tview.NewTextView().SetText("Press (d) to delete task\nPress (c) to market task as complete")
+
+	leftColumn := tview.NewFlex().SetDirection(tview.FlexRow).
+		AddItem(table, 0, 1, true).
+		AddItem(shortcutsInfo, 0, 1, false)
 	rightColumn := tview.NewFlex().
 		SetDirection(tview.FlexRow).
 		AddItem(addTask, 0, 1, false).
@@ -87,7 +92,7 @@ func tui() {
 		AddItem(addTaskButton, 2, 0, false)
 
 	flex := tview.NewFlex().
-		AddItem(table, 0, 1, true).
+		AddItem(leftColumn, 0, 1, true).
 		AddItem(rightColumn, 0, 1, false)
 
 	table.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
@@ -104,7 +109,13 @@ func tui() {
 					fmt.Println(err)
 				}
 				loadTable(table, records)
-				textView.SetText(fmt.Sprintf("[green]%v has been marked complete[-]", task))
+				go func() {
+					textView.SetText(fmt.Sprintf("[green]%v has been marked complete[-]", task))
+					time.Sleep(3 * time.Second)
+					app.QueueUpdateDraw(func() {
+						textView.SetText("")
+					})
+				}()
 
 				app.SetFocus(table)
 
@@ -121,7 +132,7 @@ func tui() {
 
 				loadTable(table, records)
 
-				textView.SetText(fmt.Sprintf("[green]%v has been deleted[-]", task))
+				textView.SetText(fmt.Sprintf("[yellow]%v has been deleted[-]", task))
 
 				app.SetFocus(table)
 

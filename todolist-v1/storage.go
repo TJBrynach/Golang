@@ -54,42 +54,6 @@ func saveToCSV(task Task, fileName string) error {
 	return nil
 }
 
-func listTasks(fileName string) ([]Task, error) {
-	file, err := os.Open(fileName)
-
-	if err != nil {
-		fmt.Println("error opening the file: ", err)
-	}
-
-	defer file.Close()
-
-	reader := csv.NewReader(file)
-	records, err := reader.ReadAll()
-	if err != nil {
-		fmt.Errorf("error reading the file: %v", err)
-	}
-
-	var tasks []Task
-
-	for i, record := range records {
-		if i == 0 {
-			continue //Skip header
-		}
-		completed := record[2] == "true"
-		createdAt, _ := time.Parse(time.RFC3339, record[3])
-
-		task := Task{
-			ID:        record[0],
-			Title:     record[1],
-			Completed: completed,
-			CreatedAt: createdAt,
-		}
-		tasks = append(tasks, task)
-
-	}
-	return tasks, nil
-}
-
 func readTasks(fileName string) ([][]string, error) {
 	file, err := os.Open(fileName)
 	if err != nil {
@@ -103,8 +67,36 @@ func readTasks(fileName string) ([][]string, error) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	return records, nil
 
+}
+
+func listTasks(fileName string) ([]Task, error) {
+	records, err := readTasks(fileName)
+	if err != nil {
+		panic(err)
+	}
+
+	var tasks []Task
+
+	for i, record := range records {
+		if i == 0 {
+			continue //Skip header
+		}
+		completed := record[2] == "true"
+		createdAt, _ := time.Parse(time.RFC3339, record[3])
+
+		task := Task{
+			ID:        record[colID],
+			Title:     record[colTitle],
+			Completed: completed,
+			CreatedAt: createdAt,
+		}
+		tasks = append(tasks, task)
+
+	}
+	return tasks, nil
 }
 
 func loadTable(table *tview.Table, records [][]string) {
@@ -114,14 +106,15 @@ func loadTable(table *tview.Table, records [][]string) {
 	realrowIndex := 0
 
 	for _, row := range records {
-		if row[2] == "true" {
+		if row[colCompleted] == "true" {
 			continue
 		}
 
 		visibleColIndex := 0
 		for colIndex, cell := range row {
-			if colIndex != 0 && colIndex != 2 {
-				if colIndex == 3 {
+			if colIndex != colID && colIndex != colCompleted {
+				// format date time
+				if colIndex == colCreatedAt {
 					var formattedCell string
 					parsedTime, err := time.Parse(time.RFC3339, cell)
 					if err == nil {
@@ -132,16 +125,22 @@ func loadTable(table *tview.Table, records [][]string) {
 					tablecell := tview.NewTableCell(formattedCell).SetAlign(tview.AlignCenter)
 					table.SetCell(realrowIndex, visibleColIndex, tablecell)
 					visibleColIndex++
-				} else {
-					tablecell := tview.NewTableCell(cell).
-						SetAlign(tview.AlignCenter)
-					table.SetCell(realrowIndex, visibleColIndex, tablecell)
-					visibleColIndex++
+					//format title
+				} else if colIndex == colTitle {
+					continue
 				}
-
+				tablecell := tview.NewTableCell(cell).
+					SetAlign(tview.AlignCenter)
+				table.SetCell(realrowIndex, visibleColIndex, tablecell)
+				visibleColIndex++
+			} else {
+				tablecell := tview.NewTableCell(cell).
+					SetAlign(tview.AlignCenter)
+				table.SetCell(realrowIndex, visibleColIndex, tablecell)
+				visibleColIndex++
 			}
-		}
-		realrowIndex++
-	}
 
+		}
+	}
+	realrowIndex++
 }

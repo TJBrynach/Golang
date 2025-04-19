@@ -158,13 +158,17 @@ func readTasks(fileName string) ([]Task, error) {
 func loadTasks(table *tview.Table, tasks []Task) {
 
 	table.Clear()
+	realRowIndex := 0
+	for _, task := range tasks {
+		if task.Completed {
+			continue
+		}
 
-	for i, task := range tasks {
-		newTitle := task.wrappedTitle()
-		// table.SetCell(i, 0, tview.NewTableCell(task.ID))
-		table.SetCell(i, 0, tview.NewTableCell(newTitle))
-		// table.SetCell(i, 2, tview.NewTableCell(strconv.FormatBool(task.Completed)))
-		table.SetCell(i, 1, tview.NewTableCell(task.CreatedAt.Format("2006-01-02 15:04")))
+		titleCell := tview.NewTableCell(task.wrappedTitle()).SetAlign(tview.AlignCenter)
+		table.SetCell(realRowIndex, 0, titleCell)
+
+		table.SetCell(realRowIndex, 1, tview.NewTableCell(task.CreatedAt.Format("2006-01-02 15:04")))
+		realRowIndex++
 
 	}
 }

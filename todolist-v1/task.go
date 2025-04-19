@@ -31,21 +31,16 @@ func (t Task) wrappedTitle() string {
 
 	words := strings.Split(t.Title, " ")
 
-	realIndex := 0
+	for i, word := range words {
 
-	for index, word := range words {
-		m := index % 3
+		finalList = append(finalList, word)
 
-		if m == 2 {
-			finalList = append(finalList, word)
+		if (i+1)%3 == 0 && i != len(words)-1 {
 			finalList = append(finalList, "\n")
-		} else {
-			finalList = append(finalList, word)
-			realIndex++
 		}
 	}
-	finalString := strings.Join(finalList, " ")
-	return finalString
+
+	return strings.Join(finalList, " ")
 }
 
 func (t Task) Display() string {

@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/rivo/tview"
@@ -54,7 +55,7 @@ func saveToCSV(task Task, fileName string) error {
 	return nil
 }
 
-func readTasks(fileName string) ([][]string, error) {
+func readTasks(fileName string) ([]Task, error) {
 	file, err := os.Open(fileName)
 	if err != nil {
 		fmt.Println(err)
@@ -67,75 +68,103 @@ func readTasks(fileName string) ([][]string, error) {
 	if err != nil {
 		fmt.Println(err)
 	}
-
-	return records, nil
-
-}
-
-func listTasks(fileName string) ([]Task, error) {
-	records, err := readTasks(fileName)
-	if err != nil {
-		panic(err)
-	}
-
 	var tasks []Task
+	for _, row := range records {
 
-	for i, record := range records {
-		if i == 0 {
-			continue //Skip header
-		}
-		completed := record[2] == "true"
-		createdAt, _ := time.Parse(time.RFC3339, record[3])
-
+		completed, _ := strconv.ParseBool(row[colCompleted])
+		createdAt, _ := time.Parse(time.RFC3339, row[colCreatedAt])
 		task := Task{
-			ID:        record[colID],
-			Title:     record[colTitle],
+			ID:        row[colID],
+			Title:     row[colTitle],
 			Completed: completed,
 			CreatedAt: createdAt,
 		}
-		tasks = append(tasks, task)
 
+		tasks = append(tasks, task)
 	}
+
 	return tasks, nil
+
 }
 
-func loadTable(table *tview.Table, records [][]string) {
+// func listTasks(fileName string) ([]Task, error) {
+// 	records, err := readTasks(fileName)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+
+// 	var tasks []Task
+
+// 	for i, record := range records {
+// 		if i == 0 {
+// 			continue //Skip header
+// 		}
+// 		completed := record[2] == "true"
+// 		createdAt, _ := time.Parse(time.RFC3339, record[3])
+
+// 		task := Task{
+// 			ID:        record[colID],
+// 			Title:     record[colTitle],
+// 			Completed: completed,
+// 			CreatedAt: createdAt,
+// 		}
+// 		tasks = append(tasks, task)
+
+// 	}
+// 	return tasks, nil
+// }
+
+// func loadTable(table *tview.Table, records [][]string) {
+
+// 	table.Clear()
+
+// 	realrowIndex := 0
+
+// 	for _, row := range records {
+// 		if row[colCompleted] == "true" {
+// 			continue
+// 		}
+
+// 		visibleColIndex := 0
+// 		for colIndex, cell := range row {
+// 			if colIndex != colID && colIndex != colCompleted {
+// 				// format date time
+// 				if colIndex == colCreatedAt {
+// 					var formattedCell string
+// 					parsedTime, err := time.Parse(time.RFC3339, cell)
+// 					if err == nil {
+// 						formattedCell = parsedTime.Format("2006-01-02 15:04")
+// 					} else {
+// 						formattedCell = cell
+// 					}
+// 					tablecell := tview.NewTableCell(formattedCell).SetAlign(tview.AlignCenter)
+// 					table.SetCell(realrowIndex, visibleColIndex, tablecell)
+// 					visibleColIndex++
+// 					//format title
+// 				} else {
+// 					tablecell := tview.NewTableCell(cell).
+// 						SetAlign(tview.AlignCenter)
+// 					table.SetCell(realrowIndex, visibleColIndex, tablecell)
+// 					visibleColIndex++
+// 				}
+// 			}
+
+// 		}
+// 		realrowIndex++
+
+// 	}
+// }
+
+func loadTasks(table *tview.Table, tasks []Task) {
 
 	table.Clear()
 
-	realrowIndex := 0
-
-	for _, row := range records {
-		if row[colCompleted] == "true" {
-			continue
-		}
-
-		visibleColIndex := 0
-		for colIndex, cell := range row {
-			if colIndex != colID && colIndex != colCompleted {
-				// format date time
-				if colIndex == colCreatedAt {
-					var formattedCell string
-					parsedTime, err := time.Parse(time.RFC3339, cell)
-					if err == nil {
-						formattedCell = parsedTime.Format("2006-01-02 15:04")
-					} else {
-						formattedCell = cell
-					}
-					tablecell := tview.NewTableCell(formattedCell).SetAlign(tview.AlignCenter)
-					table.SetCell(realrowIndex, visibleColIndex, tablecell)
-					visibleColIndex++
-					//format title
-				} else {
-					tablecell := tview.NewTableCell(cell).
-						SetAlign(tview.AlignCenter)
-					table.SetCell(realrowIndex, visibleColIndex, tablecell)
-					visibleColIndex++
-				}
-			}
-
-		}
-		realrowIndex++
+	for i, task := range tasks {
+		newTitle := task.wrappedTitle()
+		// table.SetCell(i, 0, tview.NewTableCell(task.ID))
+		table.SetCell(i, 0, tview.NewTableCell(newTitle))
+		// table.SetCell(i, 2, tview.NewTableCell(strconv.FormatBool(task.Completed)))
+		table.SetCell(i, 1, tview.NewTableCell(task.CreatedAt.Format("2006-01-02 15:04")))
 
 	}
 }

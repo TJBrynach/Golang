@@ -57,26 +57,26 @@ func (t Task) Display() string {
 }
 
 func createTask(title string, fileName string) error {
-	task := Task{
+	newTask := Task{
 		ID:        uuid.New().String(),
 		Title:     title,
 		Completed: false,
 		CreatedAt: time.Now(),
 	}
 
-	records, err := readTasks(fileName)
+	tasks, err := readTasks(fileName)
 	if err != nil {
 		fmt.Println(err)
 		return err
 	}
 	count := 0
-	for _, record := range records {
-		if task.Title == record[colTitle] && record[colCompleted] == "false" {
+	for _, task := range tasks {
+		if newTask.Title == task.Title && task.Completed == false {
 			count++
 		}
 	}
 	if count == 0 {
-		if err := saveToCSV(task, fileName); err != nil {
+		if err := saveToCSV(newTask, fileName); err != nil {
 			return err
 		}
 	} else {

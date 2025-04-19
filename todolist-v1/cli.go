@@ -38,15 +38,15 @@ func HandleCLI() {
 			fmt.Println("Usage: . list")
 			return
 		}
-		tasks, err := listTasks(fileName)
-		if err != nil {
-			fmt.Println("Error loading tasks:", err)
-			return
-		}
+		// tasks, err := listTasks(fileName)
+		// if err != nil {
+		// 	fmt.Println("Error loading tasks:", err)
+		// 	return
+		// }
 
-		for _, task := range tasks {
-			fmt.Println(task.Display())
-		}
+		// for _, task := range tasks {
+		// 	fmt.Println(task.Display())
+		// }
 	case "delete":
 		if len(os.Args) < 3 {
 			fmt.Println("Usage: . delete \"title\"")

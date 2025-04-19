@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/csv"
 	"fmt"
 	"os"
 	"time"
@@ -29,13 +28,16 @@ func tui() {
 
 	defer file.Close()
 	// updates
-	reader := csv.NewReader(file)
-	records, err := reader.ReadAll()
+	// reader := csv.NewReader(file)
+	// records, err := reader.ReadAll()
+	// if err != nil {
+	// 	textView.SetText(fmt.Sprintf("[red]error reading the file: %v", err))
+	// }
+	tasks, err := readTasks(fileName)
 	if err != nil {
 		textView.SetText(fmt.Sprintf("[red]error reading the file: %v", err))
 	}
-
-	loadTable(table, records)
+	loadTasks(table, tasks)
 
 	addTask := tview.NewInputField().
 		SetLabel("New Task: ").
@@ -57,11 +59,11 @@ func tui() {
 				if err != nil {
 					textView.SetText(fmt.Sprintf("[red]%v[-]", err))
 				} else {
-					records, err = readTasks(fileName)
+					tasks, err := readTasks(fileName)
 					if err != nil {
 						fmt.Println(err)
 					}
-					loadTable(table, records)
+					loadTasks(table, tasks)
 
 					addTask.SetText("")
 
@@ -104,11 +106,11 @@ func tui() {
 				task := table.GetCell(row, 0).Text
 				completeTask(task, fileName)
 
-				records, err = readTasks(fileName)
-				if err != nil {
-					fmt.Println(err)
-				}
-				loadTable(table, records)
+				// records, err = readTasks(fileName)
+				// if err != nil {
+				// 	fmt.Println(err)
+				// }
+				// loadTable(table, records)
 				go func() {
 					textView.SetText(fmt.Sprintf("[green]%v has been marked complete[-]", task))
 					time.Sleep(3 * time.Second)
@@ -125,12 +127,12 @@ func tui() {
 				task := table.GetCell(row, 0).Text
 				deleteTasks(task, fileName)
 
-				records, err = readTasks(fileName)
-				if err != nil {
-					fmt.Println(err)
-				}
+				// records, err = readTasks(fileName)
+				// if err != nil {
+				// 	fmt.Println(err)
+				// }
 
-				loadTable(table, records)
+				// loadTable(table, records)
 
 				textView.SetText(fmt.Sprintf("[yellow]%v has been deleted[-]", task))
 

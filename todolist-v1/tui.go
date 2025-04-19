@@ -84,12 +84,12 @@ func tui() {
 
 	leftColumn := tview.NewFlex().SetDirection(tview.FlexRow).
 		AddItem(table, 0, 1, true).
-		AddItem(shortcutsInfo, 0, 1, false)
+		AddItem(shortcutsInfo, 2, 0, false)
 	rightColumn := tview.NewFlex().
 		SetDirection(tview.FlexRow).
 		AddItem(addTask, 0, 1, false).
 		AddItem(textView, 0, 2, false).
-		AddItem(addTaskButton, 2, 0, false)
+		AddItem(addTaskButton, 1, 0, false)
 
 	flex := tview.NewFlex().
 		AddItem(leftColumn, 0, 1, true).

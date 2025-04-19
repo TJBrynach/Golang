@@ -126,21 +126,16 @@ func loadTable(table *tview.Table, records [][]string) {
 					table.SetCell(realrowIndex, visibleColIndex, tablecell)
 					visibleColIndex++
 					//format title
-				} else if colIndex == colTitle {
-					continue
+				} else {
+					tablecell := tview.NewTableCell(cell).
+						SetAlign(tview.AlignCenter)
+					table.SetCell(realrowIndex, visibleColIndex, tablecell)
+					visibleColIndex++
 				}
-				tablecell := tview.NewTableCell(cell).
-					SetAlign(tview.AlignCenter)
-				table.SetCell(realrowIndex, visibleColIndex, tablecell)
-				visibleColIndex++
-			} else {
-				tablecell := tview.NewTableCell(cell).
-					SetAlign(tview.AlignCenter)
-				table.SetCell(realrowIndex, visibleColIndex, tablecell)
-				visibleColIndex++
 			}
 
 		}
+		realrowIndex++
+
 	}
-	realrowIndex++
 }

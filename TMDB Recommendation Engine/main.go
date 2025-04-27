@@ -1,14 +1,17 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/joho/godotenv"
 )
 
-const base_url = "https://api.themoviedb.org/3"
+const base_url = "https://api.themoviedb.org/3/"
 
 func getURI() string {
 	err := godotenv.Load()
@@ -22,6 +25,20 @@ func getURI() string {
 
 func main() {
 	apikey := getURI()
-	fmt.Println(apikey)
+
+	resp, err := http.Get(base_url + apikey)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	fmt.Println(body)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	if err != json.NewDecoder(resp.Body)
 
 }

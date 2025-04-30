@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -39,6 +38,8 @@ func main() {
 		fmt.Println(err)
 	}
 
-	if err != json.NewDecoder(resp.Body)
+	// if err != json.NewDecoder(resp.Body) {
+	// 	continue
+	// }
 
 }

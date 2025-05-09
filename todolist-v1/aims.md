@@ -20,7 +20,8 @@
         Task deletion
 
         CSV read/write
-
+        
+        check these are done and delet if not
 ✨ Phase 2: UI/UX Enhancements
 
     Goal: Make it more visually appealing and intuitive.

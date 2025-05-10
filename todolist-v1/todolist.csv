@@ -14,11 +14,18 @@ e8a718f0-0612-497f-b1a4-dc4f4b2ef1a6,fix todolist,true,2025-04-17T20:36:01+01:00
 9ed5dbdd-e354-4df5-a89f-715fdd52296f,fix the todolist,true,2025-04-17T22:55:48+01:00
 a27ddefb-d1b1-4f75-a2a1-5baa88df7719,gello,true,2025-04-17T23:16:58+01:00
 014caccc-e196-4e10-bf7d-f04f22d303e8,new alert,true,2025-04-18T16:08:01+01:00
+<<<<<<< Updated upstream
 45be8f8c-f351-44ed-bf52-04cd6c2e9c84,play tennis,true,2025-04-18T16:15:42+01:00
+=======
+>>>>>>> Stashed changes
 a58b0bb5-afec-4c9e-b3e7-dc9aebfd18f4,update text under d&a industries,true,2025-04-18T16:16:03+01:00
-682e670c-2b2b-4783-ac83-d4400618b948,remove sector,false,2025-04-18T16:16:12+01:00
-3f53acd4-6c1e-49ad-b9c1-9ec4e4db7588,domicile label,false,2025-04-18T16:16:22+01:00
+682e670c-2b2b-4783-ac83-d4400618b948,remove sector,true,2025-04-18T16:16:12+01:00
+3f53acd4-6c1e-49ad-b9c1-9ec4e4db7588,domicile label,true,2025-04-18T16:16:22+01:00
 1108cda1-d4d8-4111-8827-d5aa78240151,change ordering on industry overview,false,2025-04-18T16:16:33+01:00
 4544be98-7bbe-4cfc-99bc-f612a100060f,hello,true,2025-04-19T18:44:28+01:00
 b0573a97-c121-4dfb-8674-14d413abf98f,there are a lot of words in this sentence,false,2025-04-19T21:14:23+01:00
+<<<<<<< Updated upstream
 248d8db2-6cac-40d2-b88f-462eba2b6497,plan finvar work for saturday,false,2025-05-09T21:20:21+01:00
+=======
+fb85f65c-443f-470a-8c3e-4e5d7816dd1c,check the return table part of the complete/delete,false,2025-05-10T15:11:51+01:00
+>>>>>>> Stashed changes

@@ -69,8 +69,11 @@ func readTasks(fileName string) ([]Task, error) {
 		fmt.Println(err)
 	}
 	var tasks []Task
-	for _, row := range records {
-
+	for i, row := range records {
+		// ignore header
+		if i == 0 {
+			continue
+		}
 		completed, _ := strconv.ParseBool(row[colCompleted])
 		createdAt, _ := time.Parse(time.RFC3339, row[colCreatedAt])
 		task := Task{
@@ -158,7 +161,11 @@ func readTasks(fileName string) ([]Task, error) {
 func loadTasks(table *tview.Table, tasks []Task) {
 
 	table.Clear()
-	realRowIndex := 0
+
+	table.SetCell(0, 0, tview.NewTableCell("Title").SetAlign(tview.AlignCenter).SetSelectable(false))
+	table.SetCell(0, 1, tview.NewTableCell("CreatedAt").SetAlign(tview.AlignCenter).SetSelectable(false))
+
+	realRowIndex := 1
 	for _, task := range tasks {
 		if task.Completed {
 			continue
@@ -168,6 +175,7 @@ func loadTasks(table *tview.Table, tasks []Task) {
 		table.SetCell(realRowIndex, 0, titleCell)
 
 		table.SetCell(realRowIndex, 1, tview.NewTableCell(task.CreatedAt.Format("2006-01-02 15:04")))
+
 		realRowIndex++
 
 	}

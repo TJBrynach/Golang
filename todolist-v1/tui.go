@@ -134,7 +134,7 @@ func tui() {
 
 				// loadTable(table, records)
 
-				textView.SetText(fmt.Sprintf("[yellow]%v has been deleted[-]", task))
+				textView.SetText(fmt.Sprintf("[yellow]%v has now been deleted[-]", task))
 
 				app.SetFocus(table)
 

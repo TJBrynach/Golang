@@ -22,6 +22,7 @@
         CSV read/write
         
         check these are done and delet if not
+
 ✨ Phase 2: UI/UX Enhancements
 
     Goal: Make it more visually appealing and intuitive.
@@ -97,3 +98,7 @@ A fast, keyboard-driven task manager that's:
     Clean UI with priority/status/dates
 
     Hackable and scriptable (maybe with a config file or plugin support)
+
+
+
+Add sub tasks 
